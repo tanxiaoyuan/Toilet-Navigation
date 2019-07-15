@@ -3,37 +3,40 @@
     "pages/index/index",
     "pages/list/list",
     "pages/setting/setting"
-    
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "便急通",
     "navigationBarTextStyle": "black"
   },
+  
   "tabBar": {
-    "backgroundColor":"#1b1919",
     "list": [
       {
         "pagePath": "pages/index/index",
         "text": "导航",
-        "selectedIconPath ": "images/activenavigation.png",
-        "iconPath": "images/unactivenavigation.png"
-
+        "selectedIconPath": "images/navigation_selected.png",
+        "iconPath": "images/navigation.png"
       },
       {
         "pagePath": "pages/list/list",
         "text": "列表",
-        "selectedIconPath ": "images/activelist.png",
-        "iconPath": "images/unactivelist.png"
+        "selectedIconPath": "images/list_selected.png",
+        "iconPath": "images/list.png"
       },
       {
         "pagePath": "pages/setting/setting",
         "text": "设置",
-        "selectedIconPath ": "images/activesetting.png",
-        "iconPath": "images/unactivesetting.png"
+        "selectedIconPath": "images/setting_selected.png",
+        "iconPath": "images/setting.png"
       }
     ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "便急通需要获取您当前的位置，请授权！"
+    }
   },
   "sitemapLocation": "sitemap.json"
   
