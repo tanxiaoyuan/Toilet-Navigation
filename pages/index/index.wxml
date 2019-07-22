@@ -1,7 +1,6 @@
-<view class='container'>
 <map id="myMap" class='mapContainer'
    markers="{{markers}}"
    longitude= "{{longitude}}" 
-   latitude="{{latitude}}" scale='16'>
+   latitude="{{latitude}}" scale="{{scale}}">
 </map>
-</view>
+ 
