@@ -1,4 +1,6 @@
 // pages/list/list.js
+const app = getApp();
+const points = app.globalData.points;
 Page({
 
   /**
@@ -26,7 +28,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      "points": points
+    })
+    console.log(points);
   },
 
   /**

@@ -1,1 +1,15 @@
 /* pages/list/list.wxss */
+.pointImage{
+   width:6vh;
+   height:6vh;
+   display:inline-block;
+   overflow:hidden;
+   margin:-2vh 1vh;
+}
+.point-item{
+  font-size:2vh;
+   margin: 1vh;
+}
+.buttonClass{
+ text-align: left
+}

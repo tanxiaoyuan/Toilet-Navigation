@@ -1,2 +1,8 @@
-<!--pages/list/list.wxml-->
-<text>pages/list/list.wxml</text>
+<view class='container'>
+   <view wx:for="{{points}}" wx:for-item="point">
+  <button class='buttonClass' type="default" bindtap=""> 
+   <image class='pointImage' src='../../images/toilet.png'></image>
+      <text class='point-item'>{{point["title"]}}-{{point["address"]}}</text>
+   </button>
+  </view>
+</view>

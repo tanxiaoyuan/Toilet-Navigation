@@ -3,6 +3,7 @@
 const util = require('../../utils/util.js')
 const app = getApp()
 const qqmapsdk = app.globalData.qqmapsdk
+const points = app.globalData.points
 Page({
   onLoad: function () {     
     
@@ -25,6 +26,7 @@ Page({
             width: 25,
             height: 25
           })
+          points[i] = res.data[i];
         }
         mks.push({ // 获取返回结果，放到mks数组中 
           latitude: that.data.latitude,
@@ -41,10 +43,8 @@ Page({
         console.log(res);
       }
     });
-  },
-  regionchange:function(){
-    getCurrentLocation(this);
   }
+
 })
 function getCurrentLocation(obj) {
   wx.getSetting({
