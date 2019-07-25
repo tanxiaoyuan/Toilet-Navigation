@@ -31,7 +31,6 @@ Page({
     this.setData({
       "points": points
     })
-    console.log(points);
   },
 
   /**

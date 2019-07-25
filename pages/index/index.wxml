@@ -1,6 +1,22 @@
 <map id="myMap" class='mapContainer'
    markers="{{markers}}"
    longitude= "{{longitude}}" 
-   latitude="{{latitude}}" scale="{{scale}}">
+   latitude="{{latitude}}" scale="{{scale}}" bindmarkertap="showModal">
 </map>
+<cover-view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></cover-view>
+ <!--弹出框  -->
+    <cover-view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
  
+      <cover-view class='placeBox'>
+ 
+        <cover-view class='placeViewLt'>
+          <cover-view class='viewTitle'>{{myall.placeName}}</cover-view>
+          <cover-view class='viewDis'>{{myall.dis}}</cover-view>
+          <cover-view class='viewAddr'>{{myall.adr}}</cover-view>
+        </cover-view>
+        <cover-view class='placeViewRt'>
+          <cover-image data-id="{{myall.id}}" bindtap="opendetail" src='/images/mk.png'></cover-image>
+        </cover-view>
+ 
+      </cover-view>
+  </cover-view>

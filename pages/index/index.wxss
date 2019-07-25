@@ -4,3 +4,54 @@ display: block;
 width: 100%;
 height:100vh;
 }
+.coveriImg {
+  width: 10px;
+  height: 10vh;
+  margin: 1vh auto;
+  background: transparent
+}
+.commodity_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.2;
+  overflow: hidden;
+  z-index: 1000;
+  color: #fff;
+}
+
+.commodity_attr_box {
+  height: 280rpx;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  padding-top: 0rpx;
+}
+ 
+.placeBox{
+  width: 100%;
+  height: 150rpx;
+}
+ 
+.placeViewLt{
+  display: inline-block;
+  width: 620rpx;
+  height: 140rpx;
+ 
+  vertical-align: middle;
+}
+ 
+.viewTitle{
+  display: block;
+  font-size: 38rpx;
+  color: #3F51B5;
+  margin-left: 20rpx;
+  padding-top: 34rpx;
+}
