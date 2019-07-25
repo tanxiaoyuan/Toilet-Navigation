@@ -17,7 +17,7 @@ height:100vh;
   top: 0;
   left: 0;
   background: #000;
-  opacity: 0.2;
+  opacity: 0.3;
   overflow: hidden;
   z-index: 1000;
   color: #fff;
@@ -33,25 +33,35 @@ height:100vh;
   z-index: 2000;
   background: #fff;
   padding-top: 0rpx;
+  opacity: 0.8
 }
- 
-.placeBox{
-  width: 100%;
-  height: 150rpx;
-}
- 
-.placeViewLt{
-  display: inline-block;
-  width: 620rpx;
-  height: 140rpx;
- 
-  vertical-align: middle;
-}
- 
-.viewTitle{
+.modalImage{
+  width: 10vh;
+  height: 10vh;
   display: block;
-  font-size: 38rpx;
-  color: #3F51B5;
-  margin-left: 20rpx;
-  padding-top: 34rpx;
+  float: left;
+  margin-top: 1vh;
+  margin-left: 1vh
+}
+.titleView{
+  margin-top: 5vh;
+  margin-left: 12vh;
+  color: mediumslateblue;
+  font-style: italic;
+  font-weight: bolder
+}
+.addressView{
+  margin-top:4vh;
+  font-size:2vh;
+  margin-left:3vh;
+  font-weight: bolder
+}
+.navigationButton{
+  width: 10vh;
+  height: 10vh;
+  float: right;
+  display: block;
+  position: relative;
+  margin-top: -15vh;
+  margin-right: 6vh;
 }

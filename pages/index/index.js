@@ -56,7 +56,11 @@ Page({
   },
   showModal: function (event) {
     //console.log(event.markerId);
-    var i = event.markerId;
+    var id = event.markerId;
+    var singlePoint = getSinglePoint(id, points);
+    this.setData({
+      singlePoint:singlePoint
+    })
     // 显示遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -160,3 +164,12 @@ function compare(property){
 }
 
 
+function getSinglePoint(id, points){
+ var singlePoint;
+ points.forEach(function(point, index){
+      if(point.id === id){
+        singlePoint=point;
+      }
+  })
+  return singlePoint;
+}
