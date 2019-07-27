@@ -33,7 +33,7 @@ height:100vh;
   z-index: 2000;
   background: #fff;
   padding-top: 0rpx;
-  opacity: 0.8
+  opacity: 0.85
 }
 .modalImage{
   width: 10vh;

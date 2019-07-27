@@ -13,9 +13,9 @@
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.2",
-	"appid": "wx1a4b4ac36904a8ae",
-	"projectname": "Toilet%20Navigation",
+	"libVersion": "2.7.7",
+	"appid": "wxc55d5d141f206599",
+	"projectname": "Toilet-Navigation",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

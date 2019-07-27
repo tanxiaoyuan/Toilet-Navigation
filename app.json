@@ -35,9 +35,8 @@
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "便急通需要获取您当前的位置，请授权！"
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
   "sitemapLocation": "sitemap.json"
-  
 }

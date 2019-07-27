@@ -5,23 +5,22 @@ const Promise = require('../../utils/bluebird.core.min.js')
 const app = getApp()
 const qqmapsdk = app.globalData.qqmapsdk
 const points = app.globalData.points
-var mks = []
 Page({
   onLoad: function () {     
-    
+   
   },
   onShow: function () {
     this.hideModal();
     var that = this;
-    mks = []
     getCurrentLocation(that).then(function(locationRes){
       // 调用接口
       qqmapsdk.search({
         keyword: 'WC',  //搜索关键词
         success: function (res) { //搜索成功后的回调
+          var mks = [];
           for (var i = 0; i < res.data.length; i++) {
             mks.push({ // 获取返回结果，放到mks数组中
-             // title: res.data[i].title,
+              title: res.data[i].title,
               id: res.data[i].id,
               latitude: res.data[i].location.lat,
               longitude: res.data[i].location.lng,
@@ -38,21 +37,16 @@ Page({
             width: 30,
             height: 30
           })
-         // var latitude = that.data.latitude;
-         // var longitude = that.data.longitude;
           that.setData({ //设置markers属性，将搜索结果显示在地图中
-            markers: mks,
-           // latitude: latitude,
-          //  longitude: longitude
+            markers: mks
           })
-          var fromPoint = {"latitude": that.data.latitude, "longitude": that.data.longitude};
-          calculateDistance(that, fromPoint, points)
+          calculateDistance(that, points)
         },
         fail: function (res) {
           console.log(res);
         }
       });
-    })  
+   })  
   },
   showModal: function (event) {
     //console.log(event.markerId);
@@ -105,33 +99,65 @@ Page({
 })
 function getCurrentLocation(obj) {
   return new Promise(function (resolve, reject) {
-  wx.getSetting({
-    success(res) {
-      if (!res.authSetting["scope.userLocation"]) {
-         wx.showModal({
-           title: '授权提示',
-           content: '您关闭了获取当前位置的授权，请去设置授权！',
-         })
-      } else {
-        wx.getLocation({
-          type: "wgs84",
-          success: function (res) {
-            resolve(res),
-            obj.setData({
-              'longitude': res.longitude,
-              'latitude': res.latitude,
-              'iconPath': "../../images/location.png",
-              "scale": 16
-            })
-          },
-        })
+    wx.getLocation({
+      type: "wgs84",
+      success: function (res) {
+        resolve(res),
+          obj.setData({
+            'longitude': res.longitude,
+            'latitude': res.latitude,
+            'iconPath': "../../images/location.png",
+            "scale": 16
+          })
+      },
+      fail: function (res){
+        wx.getSetting({
+          success(res) {
+            if (!res.authSetting["scope.userLocation"]) {
+              wx.showModal({
+                title: '授权提示',
+                content: '需要获取您的地理位置，请确认授权，否则地图功能将无法使用！',
+                success: function (tip) {
+                  if (tip.confirm){
+                    wx.openSetting({
+                      //点击确定则调其用户设置
+                      success: function (data) {
+                        if (data.authSetting["scope.userLocation"] === true) {
+                          //如果设置成功
+                          wx.showToast({
+                            //弹窗提示
+                            title: "授权成功",
+                            icon: "success",
+                            duration: 1000
+                          });
+                          wx.getLocation({
+                            type: "wgs84",
+                            success: function (res) {
+                              resolve(res),
+                                obj.setData({
+                                  'longitude': res.longitude,
+                                  'latitude': res.latitude,
+                                  'iconPath': "../../images/location.png",
+                                  "scale": 16
+                                })
+                              }
+                           })
+                         }
+                  
+                       }
+                    })
+                  }
+                }
+              })
+            }
+          }
+        })      
       }
-    }
-  })
+    })
   })
 }
 
-function calculateDistance(obj, fromPoint, points) {
+function calculateDistance(obj, points) {
   var toPoints = [];
   points.forEach(function (item, index) {
     toPoints[index] = {"latitude": item.location.lat, "longitude": item.location.lng};
@@ -140,7 +166,7 @@ function calculateDistance(obj, fromPoint, points) {
     //mode: 'driving',//可选值：'driving'（驾车）、'walking'（步行），不填默认：'walking',可不填
     //from参数不填默认当前地址
     //获取表单提交的经纬度并设置from和to参数（示例为string格式）
-    from: fromPoint || '', //若起点有数据则采用起点坐标，若为空默认当前地址
+    from: '', //若起点有数据则采用起点坐标，若为空默认当前地址
     to: toPoints, //终点坐标
     success: function (res) {//成功后的回调
       var res = res.result;
@@ -152,7 +178,11 @@ function calculateDistance(obj, fromPoint, points) {
     },
     fail: function (error) {
       console.error(error);
+    },
+    complete:function(res){
+      console.log(res);
     }
+
   })
 }
 function compare(property){
