@@ -20,13 +20,13 @@ Page({
           var mks = [];
           for (var i = 0; i < res.data.length; i++) {
             mks.push({ // 获取返回结果，放到mks数组中
-              title: res.data[i].title,
+              //title: res.data[i].title,
               id: res.data[i].id,
               latitude: res.data[i].location.lat,
               longitude: res.data[i].location.lng,
               iconPath: "../../images/toilet.png", //图标路径
-              width: 30,
-              height: 30
+              width: 40,
+              height: 40 
             })
             points[i] = res.data[i];
           }
@@ -37,10 +37,24 @@ Page({
             width: 30,
             height: 30
           })
+          calculateDistance(that, points);
+          for (var index in mks){
+            if (mks[index].id === points[0].id) {
+              mks[index]["callout"] = {
+                content: '离您最近',
+                color: '#FF0000',
+                fontSize: 15,
+                borderRadius: 2,
+                display: 'ALWAYS',
+                
+              };
+           }
+          }
+
           that.setData({ //设置markers属性，将搜索结果显示在地图中
             markers: mks
           })
-          calculateDistance(that, points)
+          console.log(that.data.markers);
         },
         fail: function (res) {
           console.log(res);
@@ -107,7 +121,7 @@ function getCurrentLocation(obj) {
             'longitude': res.longitude,
             'latitude': res.latitude,
             'iconPath': "../../images/location.png",
-            "scale": 16
+            "scale": 16.5
           })
       },
       fail: function (res){
@@ -143,7 +157,6 @@ function getCurrentLocation(obj) {
                               }
                            })
                          }
-                  
                        }
                     })
                   }
@@ -180,7 +193,6 @@ function calculateDistance(obj, points) {
       console.error(error);
     },
     complete:function(res){
-      console.log(res);
     }
 
   })
