@@ -10,5 +10,5 @@
       <cover-view class='titleView'>{{singlePoint.title}}</cover-view>
       <cover-view class='addressView'>{{singlePoint.distance}} M</cover-view>  
       <cover-view class='addressView'>{{singlePoint.address}}</cover-view>
-      <cover-image class='navigationButton' src="../../images/navigationButton.png"></cover-image>  
+      <cover-image bindtap='showOrientation' class='navigationButton' src="../../images/navigationButton.png"></cover-image>  
   </cover-view>

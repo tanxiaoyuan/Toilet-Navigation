@@ -42,12 +42,18 @@ Page({
             if (mks[index].id === points[0].id) {
               mks[index]["callout"] = {
                 content: '离您最近',
-                color: '#FF0000',
+                color: '#1296db',
                 fontSize: 15,
                 borderRadius: 2,
                 display: 'ALWAYS',
-                
+                bgColor: "#dbdbdb",
+                opacity: 0.3,
+                borderWidth: 1,
+                borderColor: "#dbdbdb",
               };
+              mks[index].width = 50;
+              mks[index].height = 50;
+              mks[index].iconPath = '../../images/toiletNearest.png'
            }
           }
 
@@ -108,6 +114,33 @@ Page({
         showModalStatus: false
       })
     }.bind(this), 200)
+  },
+  showOrientation:function(){
+    var that = this;
+    wx.showModal({
+      title: '定位提示',
+      content: '确定要去这里？',
+      success:function(res){
+          if(res.confirm){
+            wx.openLocation({ // 打开微信内置地图，实现导航功能（在内置地图里面打开地图软件）
+              latitude: that.data.latitude,
+              longitude: that.data.longitude,
+              name: that.data.singlePoint.address,
+              success: function (res) {
+                console.log(res);
+              },
+              fail: function (res) {
+                console.log(res);
+              }
+            })
+          }else{
+            that.hideModal();
+          }
+      },
+      fail:function(){
+        this.hideModal();
+      }
+    })
   }
 
 })

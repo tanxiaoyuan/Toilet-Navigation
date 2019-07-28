@@ -1,6 +1,6 @@
 <view class='container'>
    <view wx:for="{{points}}" wx:for-item="point">
-  <button class='buttonClass' type="default" bindtap=""> 
+  <button class='buttonClass' type="default" bindtap="showOrientation" id="{{point['address']}}"> 
    <image class='pointImage' src='../../images/toilet.png'></image>
       <text class='point-item'>{{point["address"]}}</text>
       <text class="point-distance">距离您 {{point["distance"]}} 米</text>
