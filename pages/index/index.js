@@ -60,7 +60,6 @@ Page({
           that.setData({ //设置markers属性，将搜索结果显示在地图中
             markers: mks
           })
-          console.log(that.data.markers);
         },
         fail: function (res) {
           console.log(res);
