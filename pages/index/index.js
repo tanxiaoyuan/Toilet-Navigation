@@ -6,6 +6,30 @@ const app = getApp()
 const qqmapsdk = app.globalData.qqmapsdk
 const points = app.globalData.points
 Page({
+  data:{
+      controls: [{
+        id: "zoomIn",
+        position: {
+          left: 10,
+          top: 30,
+          width: 40,
+          height: 40
+        },
+        clickable: true,
+        iconPath: '/images/zoomIn.png',
+      },
+        {
+          id: "zoomOut",
+          position: {
+            left: 10,
+            top: 70,
+            width: 40,
+            height: 40
+          },
+          clickable: true,
+          iconPath: '/images/zoomOut.png',
+        }]
+  },
   onLoad: function () {     
    
   },
@@ -140,8 +164,19 @@ Page({
         this.hideModal();
       }
     })
+  },
+  controltap:function(e){
+    var that = this;
+    if (e.controlId === "zoomIn") {
+      that.setData({
+        scale: ++that.data.scale
+      })
+    } else {
+      that.setData({
+        scale: --that.data.scale
+      })
+    }
   }
-
 })
 function getCurrentLocation(obj) {
   return new Promise(function (resolve, reject) {
@@ -208,7 +243,7 @@ function calculateDistance(obj, points) {
     toPoints[index] = {"latitude": item.location.lat, "longitude": item.location.lng};
   })
   qqmapsdk.calculateDistance({
-    //mode: 'driving',//可选值：'driving'（驾车）、'walking'（步行），不填默认：'walking',可不填
+    mode: 'straight',//可选值：'driving'（驾车）、'walking'（步行），不填默认：'walking',可不填
     //from参数不填默认当前地址
     //获取表单提交的经纬度并设置from和to参数（示例为string格式）
     from: '', //若起点有数据则采用起点坐标，若为空默认当前地址

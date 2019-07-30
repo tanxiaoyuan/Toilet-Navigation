@@ -2,7 +2,7 @@
    markers="{{markers}}"
    longitude= "{{longitude}}" 
    latitude="{{latitude}}" scale="{{scale}}" bindmarkertap="showModal" 
-   subkey="R3OBZ-GU663-KA73R-3SCOZ-ZFGC2-WFFOY">
+   subkey="R3OBZ-GU663-KA73R-3SCOZ-ZFGC2-WFFOY" controls="{{controls}}" bindcontroltap="controltap">
 </map>
 <cover-view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></cover-view>
  <!--弹出框  -->

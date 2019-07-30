@@ -1,8 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/list/list",
-    "pages/setting/setting"
+    "pages/list/list"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -24,12 +23,6 @@
         "text": "列表",
         "selectedIconPath": "images/list_selected.png",
         "iconPath": "images/list.png"
-      },
-      {
-        "pagePath": "pages/setting/setting",
-        "text": "设置",
-        "selectedIconPath": "images/setting_selected.png",
-        "iconPath": "images/setting.png"
       }
     ]
   },
