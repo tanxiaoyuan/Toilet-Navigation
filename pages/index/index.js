@@ -181,7 +181,7 @@ Page({
 function getCurrentLocation(obj) {
   return new Promise(function (resolve, reject) {
     wx.getLocation({
-      type: "wgs84",
+      type: "gcj02",
       success: function (res) {
         resolve(res),
           obj.setData({
@@ -212,7 +212,7 @@ function getCurrentLocation(obj) {
                             duration: 1000
                           });
                           wx.getLocation({
-                            type: "wgs84",
+                            type: "gcj02",
                             success: function (res) {
                               resolve(res),
                                 obj.setData({

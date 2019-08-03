@@ -71,8 +71,8 @@ Page({
     var that = this;
     var toLocation = e.currentTarget.id;
     wx.showModal({
-      title: '定位提示',
-      content: '确定要去这里？',
+      title: '导航提示',
+      content: '确定要去【' + toLocation + '】？',
       success: function (res) {
         if (res.confirm) {
           wx.openLocation({ // 打开微信内置地图，实现导航功能（在内置地图里面打开地图软件）
