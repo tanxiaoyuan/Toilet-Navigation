@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 const util = require('../../utils/util.js')
-const Promise = require('../../utils/bluebird.core.min.js')
 const app = getApp()
 const qqmapsdk = app.globalData.qqmapsdk
 const points = app.globalData.points
@@ -36,63 +35,10 @@ Page({
   onShow: function () {
     this.hideModal();
     var that = this;
-    getCurrentLocation(that).then(function(locationRes){
+    getCurrentLocation(that);
       // 调用接口
-      qqmapsdk.search({
-        keyword: 'WC',  //搜索关键词
-        success: function (res) { //搜索成功后的回调
-          var mks = [];
-          for (var i = 0; i < res.data.length; i++) {
-            mks.push({ // 获取返回结果，放到mks数组中
-              //title: res.data[i].title,
-              id: res.data[i].id,
-              latitude: res.data[i].location.lat,
-              longitude: res.data[i].location.lng,
-              iconPath: "../../images/toilet.png", //图标路径
-              width: 40,
-              height: 40 
-            })
-            points[i] = res.data[i];
-          }
-          mks.push({ // 获取返回结果，放到mks数组中 
-            latitude: that.data.latitude,
-            longitude: that.data.longitude,
-            iconPath: "../../images/location.png", //图标路径
-            width: 30,
-            height: 30
-          })
-          calculateDistance(that, points);
-          for (var index in mks){
-            if (mks[index].id === points[0].id) {
-              mks[index]["callout"] = {
-                content: '离您最近',
-                color: '#1296db',
-                fontSize: 15,
-                borderRadius: 2,
-                display: 'ALWAYS',
-                bgColor: "#dbdbdb",
-                opacity: 0.3,
-                borderWidth: 1,
-                borderColor: "#dbdbdb",
-              };
-              mks[index].width = 50;
-              mks[index].height = 50;
-              mks[index].iconPath = '../../images/toiletNearest.png'
-           }
-          }
-
-          that.setData({ //设置markers属性，将搜索结果显示在地图中
-            markers: mks
-          })
-        },
-        fail: function (res) {
-          console.log(res);
-        }
-      });
-   })  
   },
   showModal: function (event) {
-    //console.log(event.markerId);
     var id = event.markerId;
     var singlePoint = getSinglePoint(id, points);
     this.setData({
@@ -179,17 +125,16 @@ Page({
   }
 })
 function getCurrentLocation(obj) {
-  return new Promise(function (resolve, reject) {
     wx.getLocation({
       type: "gcj02",
       success: function (res) {
-        resolve(res),
           obj.setData({
             'longitude': res.longitude,
             'latitude': res.latitude,
             'iconPath': "../../images/location.png",
             "scale": 16.5
-          })
+          });
+        searchPoints(obj, points)
       },
       fail: function (res){
         wx.getSetting({
@@ -214,13 +159,13 @@ function getCurrentLocation(obj) {
                           wx.getLocation({
                             type: "gcj02",
                             success: function (res) {
-                              resolve(res),
                                 obj.setData({
                                   'longitude': res.longitude,
                                   'latitude': res.latitude,
                                   'iconPath': "../../images/location.png",
                                   "scale": 16
-                                })
+                                });
+                                searchPoints(obj, points)
                               }
                            })
                          }
@@ -234,7 +179,60 @@ function getCurrentLocation(obj) {
         })      
       }
     })
-  })
+}
+
+function searchPoints(obj, points){
+  qqmapsdk.search({
+    keyword: 'WC',  //搜索关键词
+    success: function (res) { //搜索成功后的回调
+      var mks = [];
+      for (var i = 0; i < res.data.length; i++) {
+        mks.push({ // 获取返回结果，放到mks数组中
+          //title: res.data[i].title,
+          id: res.data[i].id,
+          latitude: res.data[i].location.lat,
+          longitude: res.data[i].location.lng,
+          iconPath: "../../images/toilet.png", //图标路径
+          width: 40,
+          height: 40
+        })
+        points[i] = res.data[i];
+      }
+      mks.push({ // 获取返回结果，放到mks数组中 
+        latitude: obj.data.latitude,
+        longitude: obj.data.longitude,
+        iconPath: "../../images/location.png", //图标路径
+        width: 30,
+        height: 30
+      })
+      calculateDistance(obj, points);
+      for (var index in mks) {
+        if (mks[index].id === points[0].id) {
+          mks[index]["callout"] = {
+            content: '离您最近',
+            color: '#1296db',
+            fontSize: 15,
+            borderRadius: 2,
+            display: 'ALWAYS',
+            bgColor: "#dbdbdb",
+            opacity: 0.3,
+            borderWidth: 1,
+            borderColor: "#dbdbdb",
+          };
+          mks[index].width = 50;
+          mks[index].height = 50;
+          mks[index].iconPath = '../../images/toiletNearest.png'
+        }
+      }
+
+      obj.setData({ //设置markers属性，将搜索结果显示在地图中
+        markers: mks
+      })
+    },
+    fail: function (res) {
+      console.log(res);
+    }
+  });
 }
 
 function calculateDistance(obj, points) {
@@ -261,7 +259,6 @@ function calculateDistance(obj, points) {
     },
     complete:function(res){
     }
-
   })
 }
 function compare(property){

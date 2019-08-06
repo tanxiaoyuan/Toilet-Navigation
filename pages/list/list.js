@@ -27,10 +27,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (!points[0]["distance"]){
+      return;
+    }
     this.setData({
       "points": points
     })
-    getCurrentLocation(this);
+   // getCurrentLocation(this);
   },
 
   /**
