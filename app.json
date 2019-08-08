@@ -1,14 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/list/list"
+    "pages/list/list",
+    "pages/about/about"
   ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#41B8FC",
-    "navigationBarTitleText": "便急通",
-    "navigationBarTextStyle": "black"
-  },
   
   "tabBar": {
     "list": [

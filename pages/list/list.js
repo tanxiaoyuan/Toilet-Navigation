@@ -1,6 +1,7 @@
 // pages/list/list.js
 const app = getApp();
 const points = app.globalData.points;
+const util = require('../../utils/util.js')
 Page({
 
   /**
@@ -14,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    util.checkForUpdate();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -1,0 +1,23 @@
+/* pages/about/about.wxss */
+
+.lablel{
+  margin-top: 10vh;
+  margin-left: 21vh;
+  display: inline-block;
+}
+.lableImage{
+    height: 20vh;
+    width: 20vh
+}
+.labelName{
+  display: block;
+  margin-top: 0.5vh;
+  margin-left: 6vh;
+  color: goldenrod
+}
+.decription{
+  margin-top: 1vh
+}
+.buttonClass{
+  text-align: left
+}

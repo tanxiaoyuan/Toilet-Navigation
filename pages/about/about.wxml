@@ -1,0 +1,13 @@
+<!--pages/about/about.wxml-->
+<view class='container'>
+ <view class='lablel'>
+  <image class='lableImage'  src="../../images/label.png"></image>
+  <text class='labelName'>便急通</text>
+ </view>
+ <view class='decription'>
+ <button class='buttonClass' type="default"><text>开发者: 空少</text></button>
+ <button class='buttonClass' type="default"><text>版本号: V1.0.2</text></button>
+ <button class='buttonClass' type="default"><text>使用说明: </text></button>
+ <button class='buttonClass' type="default"><text>版本更新说明</text></button>
+ </view>
+</view>

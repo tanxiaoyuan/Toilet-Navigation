@@ -9,8 +9,8 @@ Page({
       controls: [{
         id: "zoomIn",
         position: {
-          left: 10,
-          top: 30,
+          left: 320,
+          top: 300,
           width: 40,
           height: 40
         },
@@ -18,19 +18,56 @@ Page({
         iconPath: '/images/zoomIn.png',
       },
         {
+          id: "relocation",
+          position: {
+            left: 318,
+            top: 350,
+            width: 40,
+            height: 40
+          },
+          clickable: true,
+          iconPath: '/images/relocation.png',
+        },
+        {
           id: "zoomOut",
           position: {
-            left: 10,
-            top: 70,
+            left: 320,
+            top: 400,
             width: 40,
             height: 40
           },
           clickable: true,
           iconPath: '/images/zoomOut.png',
-        }]
+        },
+        {
+          id: "refresh",
+          position: {
+            left: 318,
+            top: 450,
+            width: 40,
+            height: 40
+          },
+          clickable: true,
+          iconPath: '/images/refresh.png',
+        },
+        {
+          id: "about",
+          position: {
+            left: 318,
+            top: 500,
+            width: 40,
+            height: 40
+          },
+          clickable: true,
+          iconPath: '/images/about.png',
+        }
+        ]
   },
-  onLoad: function () {     
-   
+  onLoad: function () {
+    util.checkForUpdate();     
+    this.setData({
+      "scale": 16.5
+    })
   },
   onShow: function () {
     this.hideModal();
@@ -113,30 +150,42 @@ Page({
   },
   controltap:function(e){
     var that = this;
-    if (e.controlId === "zoomIn") {
+    var controlId = e.controlId;
+    if (controlId === "zoomIn") {
       that.setData({
         scale: ++that.data.scale
       })
-    } else {
+    } else if (controlId === "zoomOut"){
       that.setData({
         scale: --that.data.scale
+      })
+    } else if (controlId === "refresh"){
+        getCurrentLocation(that);
+    } else if (controlId === "relocation"){ 
+      var mapContext = wx.createMapContext("myMap", this);
+      mapContext.moveToLocation();
+    } else if (controlId === "about"){
+      wx.navigateTo({
+        url: '/pages/about/about'
       })
     }
   }
 })
 function getCurrentLocation(obj) {
+  wx.showLoading({
+    title: '数据正在加载...',
+  })
     wx.getLocation({
       type: "gcj02",
       success: function (res) {
           obj.setData({
             'longitude': res.longitude,
-            'latitude': res.latitude,
-            'iconPath': "../../images/location.png",
-            "scale": 16.5
+            'latitude': res.latitude
           });
         searchPoints(obj, points)
       },
       fail: function (res){
+        wx.hideLoading();
         wx.getSetting({
           success(res) {
             if (!res.authSetting["scope.userLocation"]) {
@@ -156,14 +205,15 @@ function getCurrentLocation(obj) {
                             icon: "success",
                             duration: 1000
                           });
-                          wx.getLocation({
+                          wx.showLoading({
+                            title: '数据正在加载...',
+                          }),
+                          wx.getLocation({  
                             type: "gcj02",
                             success: function (res) {
                                 obj.setData({
                                   'longitude': res.longitude,
-                                  'latitude': res.latitude,
-                                  'iconPath': "../../images/location.png",
-                                  "scale": 16
+                                  'latitude': res.latitude
                                 });
                                 searchPoints(obj, points)
                               }
@@ -177,8 +227,13 @@ function getCurrentLocation(obj) {
             }
           }
         })      
+      },
+      complete:function(){
+        wx.hideLoading();
+        wx.vibrateShort();
       }
     })
+    
 }
 
 function searchPoints(obj, points){
@@ -198,13 +253,6 @@ function searchPoints(obj, points){
         })
         points[i] = res.data[i];
       }
-      mks.push({ // 获取返回结果，放到mks数组中 
-        latitude: obj.data.latitude,
-        longitude: obj.data.longitude,
-        iconPath: "../../images/location.png", //图标路径
-        width: 30,
-        height: 30
-      })
       calculateDistance(obj, points);
       for (var index in mks) {
         if (mks[index].id === points[0].id) {
