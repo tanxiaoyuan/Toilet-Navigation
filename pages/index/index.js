@@ -61,7 +61,8 @@ Page({
           clickable: true,
           iconPath: '/images/about.png',
         }
-        ]
+        ],
+       locationCount: false
   },
   onLoad: function () {
     util.checkForUpdate();     
@@ -72,8 +73,21 @@ Page({
   onShow: function () {
     this.hideModal();
     var that = this;
-    getCurrentLocation(that);
+    wx.showLoading({
+      title: '数据正在加载...',
+    })
+    if(!this.data.locationCount){
+      getCurrentLocation(that);
+      startRelocationTimer(this)
       // 调用接口
+      this.setData({
+        locationCount: true
+      })
+    } 
+    wx.hideLoading();
+  },
+  onUnload: function () {
+    clearTimeout(this.data.timer);
   },
   showModal: function (event) {
     var id = event.markerId;
@@ -160,7 +174,11 @@ Page({
         scale: --that.data.scale
       })
     } else if (controlId === "refresh"){
+        wx.showLoading({
+          title: '数据正在加载中...',
+        })
         getCurrentLocation(that);
+        wx.hideLoading();
     } else if (controlId === "relocation"){ 
       var mapContext = wx.createMapContext("myMap", this);
       mapContext.moveToLocation();
@@ -172,17 +190,16 @@ Page({
   }
 })
 function getCurrentLocation(obj) {
-  wx.showLoading({
-    title: '数据正在加载...',
-  })
     wx.getLocation({
       type: "gcj02",
       success: function (res) {
+        if(res.latitude != obj.data.latitude || res.longitude != obj.data.longitude){
           obj.setData({
             'longitude': res.longitude,
             'latitude': res.latitude
           });
-        searchPoints(obj, points)
+          searchPoints(obj, points)
+        }   
       },
       fail: function (res){
         wx.hideLoading();
@@ -229,7 +246,6 @@ function getCurrentLocation(obj) {
         })      
       },
       complete:function(){
-        wx.hideLoading();
         wx.vibrateShort();
       }
     })
@@ -327,3 +343,14 @@ function getSinglePoint(id, points){
   })
   return singlePoint;
 }
+
+function startRelocationTimer(obj) {
+     var timerName = setTimeout(function () {
+       getCurrentLocation(obj);
+       startRelocationTimer(obj);   
+     }, 60 * 1000)
+     // 保存定时器name
+      obj.setData({
+        timer: timerName
+     })
+ }
