@@ -1,19 +1,24 @@
 /* pages/about/about.wxss */
 
 .lablel{
-  margin-top: 10vh;
-  margin-left: 21vh;
-  display: inline-block;
+  display: block;
+  background-color: whitesmoke;
+  width: 100%
 }
 .lableImage{
     height: 20vh;
-    width: 20vh
+    width: 20vh;
+    display: inline-block;
+    margin-left: 35%;
+    margin-top: 5%;
+    border-radius:10vh;
 }
 .labelName{
   display: block;
   margin-top: 0.5vh;
-  margin-left: 6vh;
-  color: goldenrod
+  margin-left: 43%;
+  color: goldenrod;
+  font-size: 3vh
 }
 .decription{
   margin-top: 1vh
