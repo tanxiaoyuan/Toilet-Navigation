@@ -143,9 +143,9 @@ Page({
       success:function(res){
           if(res.confirm){
             wx.openLocation({ // 打开微信内置地图，实现导航功能（在内置地图里面打开地图软件）
-              latitude: that.data.latitude,
-              longitude: that.data.longitude,
-              name: that.data.singlePoint.address,
+              latitude: that.data.singlePoint.latitude,
+              longitude: that.data.singlePoint.longitude,
+              name: that.data.singlePoint.address + that.data.singlePoint.title,
               success: function (res) {
                 console.log(res);
               },
@@ -315,6 +315,8 @@ function calculateDistance(obj, points) {
       var dis = [];
       for (var i = 0; i < res.elements.length; i++) {
         points[i]["distance"] = res.elements[i].distance;
+        points[i]["latitude"] = toPoints[i].latitude;
+        points[i]["longitude"] = toPoints[i].longitude
       }
       points.sort(compare("distance"));
     },
