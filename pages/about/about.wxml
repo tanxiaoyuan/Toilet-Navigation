@@ -1,5 +1,5 @@
 <!--pages/about/about.wxml-->
-<view class='container'>
+<view>
  <view class='lablel'>
   <image class='lableImage'  src="../../images/label.png"></image>
   <text class='labelName'>便急通</text>

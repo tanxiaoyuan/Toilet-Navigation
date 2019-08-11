@@ -74,14 +74,16 @@ Page({
   showOrientation: function (e) {
     var that = this;
     var toLocation = e.currentTarget.id;
+    var latitude = e.currentTarget.dataset.latitude
+    var longitude = e.currentTarget.dataset.longitude
     wx.showModal({
       title: '导航提示',
       content: '确定要去【' + toLocation + '】？',
       success: function (res) {
         if (res.confirm) {
           wx.openLocation({ // 打开微信内置地图，实现导航功能（在内置地图里面打开地图软件）
-            latitude: that.data.latitude,
-            longitude: that.data.longitude,
+            latitude: latitude,
+            longitude: longitude,
             name: toLocation,
             success: function (res) {
               console.log(res);

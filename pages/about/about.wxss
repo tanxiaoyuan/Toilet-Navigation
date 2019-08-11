@@ -1,7 +1,7 @@
 /* pages/about/about.wxss */
 
 .lablel{
-  display: block;
+  display:inline-block;
   background-color: whitesmoke;
   width: 100%
 }
@@ -16,9 +16,10 @@
 .labelName{
   display: block;
   margin-top: 0.5vh;
-  margin-left: 43%;
-  color: goldenrod;
-  font-size: 3vh
+  margin-left:40%;
+  color:goldenrod;
+  font-size:4vh;
+  font-weight: bold;
 }
 .decription{
   margin-top: 1vh
