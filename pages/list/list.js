@@ -16,6 +16,7 @@ Page({
    */
   onLoad: function (options) {
     util.checkForUpdate();
+    app.globalData.listPage = this;
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -28,13 +29,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.showLoading({
+      title: '数据正在加载...',
+    })
     if (!points[0]["distance"]){
       return;
     }
     this.setData({
       "points": points
     })
-   // getCurrentLocation(this);
+    wx.hideLoading();
   },
 
   /**

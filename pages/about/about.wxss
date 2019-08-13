@@ -1,15 +1,15 @@
 /* pages/about/about.wxss */
-
-.lablel{
-  display:inline-block;
+page{
   background-color: whitesmoke;
-  width: 100%
+}
+.about{
+  background-color: whitesmoke;
 }
 .lableImage{
     height: 20vh;
     width: 20vh;
     display: inline-block;
-    margin-left: 35%;
+    margin-left: 34%;
     margin-top: 5%;
     border-radius:10vh;
 }
@@ -26,4 +26,12 @@
 }
 .buttonClass{
   text-align: left
+}
+.decriptionText{
+  font-size: 2vh
+}
+.decriptionImage{
+  width:50vh;
+  height:10vh;
+  margin-left:3vh;
 }

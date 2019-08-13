@@ -76,6 +76,9 @@ Page({
     wx.showLoading({
       title: '数据正在加载...',
     })
+    this.setData({
+      "stopTimer": false
+    })
     if(!this.data.locationCount){
       getCurrentLocation(that);
       startRelocationTimer(this)
@@ -89,7 +92,12 @@ Page({
   onUnload: function () {
     clearTimeout(this.data.timer);
   },
+  onHide: function(){
+  },
   showModal: function (event) {
+    this.setData({
+      "stopTimer": true
+    })
     var id = event.markerId;
     var singlePoint = getSinglePoint(id, points);
     this.setData({
@@ -116,6 +124,9 @@ Page({
   },
 
   hideModal: function () {
+    this.setData({
+      "stopTimer": false
+    })
     // 隐藏遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -186,6 +197,9 @@ Page({
       wx.navigateTo({
         url: '/pages/about/about'
       })
+      that.setData({
+        "stopTimer":true
+      })
     }
   }
 })
@@ -202,51 +216,66 @@ function getCurrentLocation(obj) {
         }   
       },
       fail: function (res){
-        wx.hideLoading();
-        wx.getSetting({
-          success(res) {
-            if (!res.authSetting["scope.userLocation"]) {
-              wx.showModal({
-                title: '授权提示',
-                content: '需要获取您的地理位置，请确认授权，否则地图功能将无法使用！',
-                success: function (tip) {
-                  if (tip.confirm){
-                    wx.openSetting({
-                      //点击确定则调其用户设置
-                      success: function (data) {
-                        if (data.authSetting["scope.userLocation"] === true) {
-                          //如果设置成功
-                          wx.showToast({
-                            //弹窗提示
-                            title: "授权成功",
-                            icon: "success",
-                            duration: 1000
-                          });
-                          wx.showLoading({
-                            title: '数据正在加载...',
-                          }),
-                          wx.getLocation({  
-                            type: "gcj02",
-                            success: function (res) {
-                                obj.setData({
-                                  'longitude': res.longitude,
-                                  'latitude': res.latitude
-                                });
-                                searchPoints(obj, points)
-                              }
-                           })
-                         }
-                       }
-                    })
+        if (res.errMsg.indexOf("auth")){
+          wx.hideLoading();
+          wx.getSetting({
+            success(settingRes) {
+              if (!settingRes.authSetting["scope.userLocation"]) {
+                wx.showModal({
+                  title: '授权提示',
+                  content: '需要获取您的地理位置，请确认授权，否则地图功能将无法使用！',
+                  success: function (tip) {
+                    if (tip.confirm) {
+                      wx.openSetting({
+                        //点击确定则调其用户设置
+                        success: function (data) {
+                          if (data.authSetting["scope.userLocation"] === true) {
+                            //如果设置成功
+                            wx.showToast({
+                              //弹窗提示
+                              title: "授权成功",
+                              icon: "success",
+                              duration: 1000
+                            });
+                            wx.showLoading({
+                              title: '数据正在加载...',
+                            }),
+                              wx.getLocation({
+                                type: "gcj02",
+                                success: function (reRes) {
+                                  obj.setData({
+                                    'longitude': reRes.longitude,
+                                    'latitude': reRes.latitude
+                                  });
+                                  searchPoints(obj, points)
+                                },
+                                fail: function () {
+                                  log.error("ReGetting location failed: " + reRes.errMsg);
+                                },
+                                complete: function (reRes) {
+                                  wx.hideLoading();
+                                }
+                              },
+                              )
+                          }
+                        }
+                      })
+                    }else{
+                      return;
+                    }
                   }
-                }
-              })
+                })
+              }
             }
-          }
-        })      
+          })  
+        }else{
+          wx.hideLoading();
+          log.error("Getting location failed: " + res.errMsg);
+        }    
       },
       complete:function(){
-        wx.vibrateShort();
+        wx.hideLoading();
+        wx.vibrateLong();
       }
     })
     
@@ -288,13 +317,13 @@ function searchPoints(obj, points){
           mks[index].iconPath = '../../images/toiletNearest.png'
         }
       }
-
       obj.setData({ //设置markers属性，将搜索结果显示在地图中
         markers: mks
       })
     },
     fail: function (res) {
-      console.log(res);
+      log.error("Getting the points failed: " + res.errMsg)
+      return;
     }
   });
 }
@@ -348,9 +377,14 @@ function getSinglePoint(id, points){
 
 function startRelocationTimer(obj) {
      var timerName = setTimeout(function () {
-       getCurrentLocation(obj);
+       if (!obj.data.stopTimer){
+         getCurrentLocation(obj);
+       }
+       if (app.globalData.listPage){
+         app.globalData.listPage.onShow();
+       }
        startRelocationTimer(obj);   
-     }, 60 * 1000)
+     }, 60 * 1000) 
      // 保存定时器name
       obj.setData({
         timer: timerName
