@@ -33,6 +33,7 @@ Page({
       title: '数据正在加载...',
     })
     if (!points[0]["distance"]){
+      wx.hideLoading();
       return;
     }
     this.setData({
