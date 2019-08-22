@@ -29,17 +29,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading({
-      title: '数据正在加载...',
-    })
-    if (!points[0]["distance"]){
-      wx.hideLoading();
-      return;
+    if(!points[0] || !points[0]["distance"]){
+        return;
     }
     this.setData({
       "points": points
     })
-    wx.hideLoading();
+    Object.assign(this, this.options.data); 
   },
 
   /**
@@ -107,60 +103,3 @@ Page({
     })
   }
 })
-
-function getCurrentLocation(obj) {
-  return new Promise(function (resolve, reject) {
-    wx.getLocation({
-      type: "wgs84",
-      success: function (res) {
-        resolve(res),
-          obj.setData({
-            'longitude': res.longitude,
-            'latitude': res.latitude
-          })
-      },
-      fail: function (res) {
-        wx.getSetting({
-          success(res) {
-            if (!res.authSetting["scope.userLocation"]) {
-              wx.showModal({
-                title: '授权提示',
-                content: '需要获取您的地理位置，请确认授权，否则地图功能将无法使用！',
-                success: function (tip) {
-                  if (tip.confirm) {
-                    wx.openSetting({
-                      //点击确定则调其用户设置
-                      success: function (data) {
-                        if (data.authSetting["scope.userLocation"] === true) {
-                          //如果设置成功
-                          wx.showToast({
-                            //弹窗提示
-                            title: "授权成功",
-                            icon: "success",
-                            duration: 1000
-                          });
-                          wx.getLocation({
-                            type: "wgs84",
-                            success: function (res) {
-                              resolve(res),
-                                obj.setData({
-                                  'longitude': res.longitude,
-                                  'latitude': res.latitude,
-                                  'iconPath': "../../images/location.png",
-                                  "scale": 16
-                                })
-                            }
-                          })
-                        }
-                      }
-                    })
-                  }
-                }
-              })
-            }
-          }
-        })
-      }
-    })
-  })
-}

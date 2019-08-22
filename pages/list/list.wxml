@@ -3,7 +3,8 @@
   <button class='buttonClass' type="default" bindtap="showOrientation" id="{{point['address']}}{{point['title']}}" 
   data-latitude="{{point['latitude']}}" data-longitude="{{point['longitude']}}"> 
    <image class='pointImage' src='../../images/toilet.png'></image>
-      <text class='point-item'>{{point["address"]}}</text>
+      <text class='point-title'>{{point["title"]}}</text>
+      <image class='title-image' src='../../images/litlelocation.png'></image><text class='point-item'>{{point["address"]}}</text>
       <text class="point-distance">距离您 {{point["distance"]}} 米</text>
    </button>
   </view>

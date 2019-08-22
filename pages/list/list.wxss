@@ -7,13 +7,18 @@
 }
 .point-item{
     font-size:2vh;
-    margin:1vh;
     text-overflow:ellipsis;
     width:30vh;
     display:block;
     white-space:nowrap;
     overflow:hidden;
-
+    font-family: times
+}
+.point-title{
+   font-size:2.5vh;
+   margin-top:0.5vh;
+   display: block;
+   font-family: courier
 }
 .buttonClass{
  text-align: left;
@@ -26,4 +31,10 @@
     display:block;
     float:right;
     margin:-6vh 0vh;
+}
+.title-image{
+    width:3vh;
+    height:3vh;
+    float:left;
+    margin-top:1vh;
 }

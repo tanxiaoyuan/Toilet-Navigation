@@ -7,5 +7,5 @@
  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">开发者:&nbsp;&nbsp;&nbsp;空少</text></button>
  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本号: &nbsp;&nbsp;&nbsp;V1.0.2</text></button>
  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">使用说明(详见公众号): &nbsp;&nbsp;&nbsp;</text><image class='decriptionImage' src="../../images/description.png"></image></button>
- <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本更新说明：\n 1.地图主界面增加刷新、回到原点、关于按钮控件;\n2.地图控件位置放置到右下侧，方便单手操作;\n 3.增加1分钟定时刷新数据功能；\n4.增加数据更新成功手机振动提示功能;\n5.增加便急通信息描述界面;\n 6.增加小程序热启动强制升级逻辑；\n 6.修复导航终点坐标不准确的问题。</text></button>
+ <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本更新说明：\n 1.地图主界面增加刷新、回到原点、关于按钮控件;\n2.地图控件位置放置到右下侧，方便单手操作;\n 3.增加1分钟定时刷新数据功能；\n4.增加数据更新成功手机振动提示功能;\n5.增加便急通信息描述界面;\n 6.增加小程序热启动强制升级逻辑；\n 7.修复导航终点坐标不准确的问题。</text></button>
 </view>

@@ -6,88 +6,29 @@ const qqmapsdk = app.globalData.qqmapsdk
 const points = app.globalData.points
 Page({
   data:{
-      controls: [{
-        id: "zoomIn",
-        position: {
-          left: 320,
-          top: 300,
-          width: 40,
-          height: 40
-        },
-        clickable: true,
-        iconPath: '/images/zoomIn.png',
-      },
-        {
-          id: "relocation",
-          position: {
-            left: 318,
-            top: 350,
-            width: 40,
-            height: 40
-          },
-          clickable: true,
-          iconPath: '/images/relocation.png',
-        },
-        {
-          id: "zoomOut",
-          position: {
-            left: 320,
-            top: 400,
-            width: 40,
-            height: 40
-          },
-          clickable: true,
-          iconPath: '/images/zoomOut.png',
-        },
-        {
-          id: "refresh",
-          position: {
-            left: 318,
-            top: 450,
-            width: 40,
-            height: 40
-          },
-          clickable: true,
-          iconPath: '/images/refresh.png',
-        },
-        {
-          id: "about",
-          position: {
-            left: 318,
-            top: 500,
-            width: 40,
-            height: 40
-          },
-          clickable: true,
-          iconPath: '/images/about.png',
-        }
-        ],
        locationCount: false
   },
   onLoad: function () {
     util.checkForUpdate();     
     this.setData({
-      "scale": 16.5
+      "scale": 16.5,
+      "lastUpdateLocationTime": 0
     })
   },
   onShow: function () {
     this.hideModal();
     var that = this;
-    wx.showLoading({
-      title: '数据正在加载...',
-    })
     this.setData({
       "stopTimer": false
     })
     if(!this.data.locationCount){
-      getCurrentLocation(that);
+      getCurrentLocation(that, false);
       startRelocationTimer(this)
       // 调用接口
       this.setData({
         locationCount: true
       })
     } 
-    wx.hideLoading();
   },
   onUnload: function () {
     clearTimeout(this.data.timer);
@@ -175,7 +116,7 @@ Page({
   },
   controltap:function(e){
     var that = this;
-    var controlId = e.controlId;
+    var controlId = e.currentTarget.id;
     if (controlId === "zoomIn") {
       that.setData({
         scale: ++that.data.scale
@@ -188,7 +129,8 @@ Page({
         wx.showLoading({
           title: '数据正在加载中...',
         })
-        getCurrentLocation(that);
+        getCurrentLocation(that, true);
+        wx.vibrateLong();
         wx.hideLoading();
     } else if (controlId === "relocation"){ 
       var mapContext = wx.createMapContext("myMap", this);
@@ -200,10 +142,25 @@ Page({
       that.setData({
         "stopTimer":true
       })
+    }else if(controlId === "choice"){
+        
     }
   }
 })
-function getCurrentLocation(obj) {
+function getCurrentLocation(obj, manual) {
+    wx.showLoading({
+     title: '数据正在加载...',
+    })
+    var time = new Date().getTime();
+    var lastUpdateTime = obj.data.lastUpdateLocationTime;
+    if(time - lastUpdateTime < 10 * 1000){
+        wx.hideLoading();
+        wx.vibrateLong();
+        return; 
+    }
+    obj.setData({
+    "lastUpdateLocationTime": time
+     })
     wx.getLocation({
       type: "gcj02",
       success: function (res) {
@@ -213,7 +170,8 @@ function getCurrentLocation(obj) {
             'latitude': res.latitude
           });
           searchPoints(obj, points)
-        }   
+        }
+        wx.vibrateLong();   
       },
       fail: function (res){
         if (res.errMsg.indexOf("auth")){
@@ -248,9 +206,16 @@ function getCurrentLocation(obj) {
                                     'latitude': reRes.latitude
                                   });
                                   searchPoints(obj, points)
+                                  wx.vibrateLong();
                                 },
                                 fail: function () {
+                                  wx.showModal({
+                                    title: '错误提示',
+                                    content: '获取位置信息失败，请检测手机GPS功能是否打开，或者手机网络是否不可达！',
+                                    showCancel: false
+                                  })
                                   log.error("ReGetting location failed: " + reRes.errMsg);
+
                                 },
                                 complete: function (reRes) {
                                   wx.hideLoading();
@@ -270,12 +235,16 @@ function getCurrentLocation(obj) {
           })  
         }else{
           wx.hideLoading();
+          wx.showModal({
+            title: '错误提示',
+            content: '获取位置信息失败，请检测手机GPS功能是否打开，或者手机网络是否不可达！',
+            showCancel: false
+          })
           log.error("Getting location failed: " + res.errMsg);
         }    
       },
       complete:function(){
         wx.hideLoading();
-        wx.vibrateLong();
       }
     })
     
@@ -324,6 +293,9 @@ function searchPoints(obj, points){
     fail: function (res) {
       log.error("Getting the points failed: " + res.errMsg)
       return;
+    },
+    complete: function(res){
+        wx.hideLoading();
     }
   });
 }
@@ -378,7 +350,7 @@ function getSinglePoint(id, points){
 function startRelocationTimer(obj) {
      var timerName = setTimeout(function () {
        if (!obj.data.stopTimer){
-         getCurrentLocation(obj);
+         getCurrentLocation(obj, false);
        }
        if (app.globalData.listPage){
          app.globalData.listPage.onShow();

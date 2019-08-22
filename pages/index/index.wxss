@@ -65,3 +65,57 @@ height:100vh;
   margin-top: -15vh;
   margin-right: 6vh;
 }
+.zoomIn{
+  width: 7vh;
+  height: 7vh;
+  float: right;
+  display: block;
+  position: relative;
+  margin-top:-46vh;
+  margin-right:3vh;
+}
+.relocation{
+  width: 8vh;
+  height: 8vh;
+  float: right;
+  display: block;
+  position: relative;
+  margin-top:-37vh;
+  margin-right:2.8vh;
+}
+.zoomOut{
+  width: 7vh;
+  height: 7vh;
+  float: right;
+  display: block;
+  position: relative;
+  margin-top:-28vh;
+  margin-right:3vh;
+}
+.refresh{
+  width: 7vh;
+  height: 7vh;
+  float: right;
+  display: block;
+  position: relative;
+  margin-top:-19vh;
+  margin-right:3vh;
+}
+.about{
+  width: 7vh;
+  height: 7vh;
+  float: right;
+  display: block;
+  position: relative;
+  margin-top:-10vh;
+  margin-right:3vh;
+}
+.choice{
+  width:8vh;
+  height:8vh;
+  float:right;
+  display:block;
+  position:relative;
+  margin-top:-55vh;
+  margin-right:2.8vh;
+}
