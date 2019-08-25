@@ -4,12 +4,6 @@ display: block;
 width: 100%;
 height:100vh;
 }
-.coveriImg {
-  width: 10px;
-  height: 10vh;
-  margin: 1vh auto;
-  background: transparent
-}
 .commodity_screen {
   width: 100%;
   height: 100%;
@@ -108,7 +102,7 @@ height:100vh;
   display: block;
   position: relative;
   margin-top:-10vh;
-  margin-right:3vh;
+  margin-right:2.8vh;
 }
 .choice{
   width:8vh;
@@ -117,5 +111,49 @@ height:100vh;
   display:block;
   position:relative;
   margin-top:-55vh;
-  margin-right:2.8vh;
+  margin-right:3vh;
+}
+.choicemodalbox{
+  height:30vh;
+  width:30%;
+  position:fixed;
+  bottom:0;
+  left:45;
+  z-index:2000;
+  background-color: wheat;
+  opacity:0.85;
+  margin-left:55%;
+  margin-bottom:34%;
+  border-radius:1vh;
+}
+.radio-group{
+    z-index:3000;
+}
+.radio{
+  display: block;
+  margin-top:0.5vh;
+  text-align:center;
+}
+.itemImage{
+  width: 5vh;
+  height: 5vh;
+  float:left;
+  margin-left: 1vh
+}
+.divLine{
+ background: #E0E3DA;
+ width: 100%;
+ height: 4rpx;
+}
+.itemText{
+  margin-top: 1vh;
+  margin-left:1vh;
+  float:left;
+}
+.radioImage{
+  width:4vh;
+  height:4vh;
+  float:left;
+  margin-top:0.8vh;
+  margin-left: 1vh
 }

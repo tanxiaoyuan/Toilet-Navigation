@@ -7,7 +7,7 @@
 <cover-view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></cover-view>
  <!--弹出框  -->
     <cover-view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
-      <cover-image class='modalImage' src="../../images/wc.png"></cover-image>
+      <cover-image class='modalImage' src="{{markImage}}"></cover-image>
       <cover-view class='titleView'>{{singlePoint.title}}</cover-view>
       <cover-view class='addressView'>{{singlePoint.distance}} M</cover-view>  
       <cover-view class='addressView'>{{singlePoint.address}}</cover-view>
@@ -22,10 +22,16 @@
 
   <cover-view class="commodity_screen" bindtap="hideChoiceModal" wx:if="{{showChoiceModalStatus}}"></cover-view>
  <!--弹出框  -->
-  <cover-view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
-      <cover-image class='modalImage' src="../../images/wc.png"></cover-image>
-      <cover-view class='titleView'>{{singlePoint.title}}</cover-view>
-      <cover-view class='addressView'>{{singlePoint.distance}} M</cover-view>  
-      <cover-view class='addressView'>{{singlePoint.address}}</cover-view>
-      <cover-image bindtap='showOrientation' class='navigationButton' src="../../images/navigationButton.png"></cover-image> 
-  </cover-view>
+  <cover-view animation="{{choiceAnimationData}}" class="choicemodalbox" wx:if="{{showChoiceModalStatus}}">
+  <cover-view>
+      <cover-view class="radio" wx:for="{{items}}">
+         <cover-view class="divLine"></cover-view>
+         <cover-view bindtap='radioChange' id="{{item.name}}">
+            <cover-image class='radioImage' src='{{item.radioImage}}'></cover-image>
+            <cover-view value="{{item.name}}" ></cover-view>
+            <cover-image class='itemImage' src="{{item.image}}" bindtap='radioChange'></cover-image>
+            <cover-view class='itemText'>{{item.value}}</cover-view>
+         </cover-view>
+      </cover-view>
+   </cover-view>
+</cover-view>

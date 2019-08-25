@@ -6,7 +6,22 @@ const qqmapsdk = app.globalData.qqmapsdk
 const points = app.globalData.points
 Page({
   data:{
-       locationCount: false
+       locationCount: false,
+       items: [
+         { name: '厕所', value: '厕所', checked: 'true', image: '../../images/toilet.png',
+         radioImage:'../../images/radioSelected.png'},
+         { name: '银行', value: '银行', image: '../../images/bank.png', 
+         radioImage: '../../images/radio.png'},
+         { name: '药店', value: '药店', image: '../../images/drugstore.png', 
+         radioImage: '../../images/radio.png'},
+         { name: '超市', value: '超市', image: '../../images/market.png',  
+          radioImage: '../../images/radio.png'},
+         { name: '医院', value: '医院', image: '../../images/hospital.png', 
+         radioImage: '../../images/radio.png'}
+    ],
+    searchId:'厕所',
+    markImage: "../../images/toilet.png",
+    nearestMarkImage: "../../images/toilet.png"
   },
   onLoad: function () {
     util.checkForUpdate();     
@@ -17,6 +32,7 @@ Page({
   },
   onShow: function () {
     this.hideModal();
+    this.hideChoiceModal();
     var that = this;
     this.setData({
       "stopTimer": false
@@ -87,6 +103,29 @@ Page({
       })
     }.bind(this), 200)
   },
+
+  hideChoiceModal:function(){
+    this.setData({
+      "stopTimer": false
+    })
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 10,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.choiceAnimationData = animation.step()
+    this.setData({
+      choiceAnimationData: animation.export(),
+    })
+    setTimeout(function () {
+      animation.step()
+      this.setData({
+        choiceAnimationData: animation.export(),
+        showChoiceModalStatus: false
+      })
+    }.bind(this), 200)
+  },
   showOrientation:function(){
     var that = this;
     wx.showModal({
@@ -143,8 +182,53 @@ Page({
         "stopTimer":true
       })
     }else if(controlId === "choice"){
-        
+      that.setData({
+        "stopTimer": true
+      })
+      // 显示遮罩层
+      var animation = wx.createAnimation({
+        duration: 200,
+        timingFunction: "ease-in-out",
+        delay: 0
+      })
+      this.choiceAnimationData = animation.step()
+      this.setData({
+        choiceAnimationData: animation.export(),
+        showChoiceModalStatus: true
+      })
+      setTimeout(function () {
+        animation.step()
+        this.setData({
+          choiceAnimationData: animation.export()
+        })
+      }.bind(this), 200)
     }
+  },
+  radioChange:function(e){
+     var searchId = e.currentTarget.id;
+     var oldSearchId = this.data.searchId;
+     var markImage;
+     var nearestMarkImage;
+     if(searchId === oldSearchId){
+        return;
+     }
+    var items = this.data.items;
+    items.forEach(function (item, index){
+       if (searchId === item.name){
+              item.radioImage = '../../images/radioSelected.png';
+              markImage = item.image;
+              nearestMarkImage = item.image;
+          }else{
+              item.radioImage = '../../images/radio.png'
+          }
+     })
+     this.setData({
+       searchId: searchId,
+       items: items,
+       markImage:markImage,
+       nearestMarkImage: nearestMarkImage
+     })
+     searchPoints(this, points);
   }
 })
 function getCurrentLocation(obj, manual) {
@@ -174,7 +258,7 @@ function getCurrentLocation(obj, manual) {
         wx.vibrateLong();   
       },
       fail: function (res){
-        if (res.errMsg.indexOf("auth")){
+        if (res.errMsg.indexOf("auth") || res.errMsg.indexOf("permission")){
           wx.hideLoading();
           wx.getSetting({
             success(settingRes) {
@@ -237,7 +321,7 @@ function getCurrentLocation(obj, manual) {
           wx.hideLoading();
           wx.showModal({
             title: '错误提示',
-            content: '获取位置信息失败，请检测手机GPS功能是否打开，或者手机网络是否不可达！',
+            content: '获取位置信息失败，请检测手机GPS功能是否打开，或者手机网络是否不可用！',
             showCancel: false
           })
           log.error("Getting location failed: " + res.errMsg);
@@ -251,8 +335,12 @@ function getCurrentLocation(obj, manual) {
 }
 
 function searchPoints(obj, points){
+  var searchId = obj.data.searchId;
+  if(!searchId){
+      searchId = "wc"
+  }
   qqmapsdk.search({
-    keyword: 'WC',  //搜索关键词
+    keyword: searchId,  //搜索关键词
     success: function (res) { //搜索成功后的回调
       var mks = [];
       for (var i = 0; i < res.data.length; i++) {
@@ -261,9 +349,9 @@ function searchPoints(obj, points){
           id: res.data[i].id,
           latitude: res.data[i].location.lat,
           longitude: res.data[i].location.lng,
-          iconPath: "../../images/toilet.png", //图标路径
-          width: 40,
-          height: 40
+          iconPath: obj.data.markImage, //图标路径
+          width: 30,
+          height: 30
         })
         points[i] = res.data[i];
       }
@@ -281,9 +369,9 @@ function searchPoints(obj, points){
             borderWidth: 1,
             borderColor: "#dbdbdb",
           };
-          mks[index].width = 50;
-          mks[index].height = 50;
-          mks[index].iconPath = '../../images/toiletNearest.png'
+          mks[index].width = 40;
+          mks[index].height = 40;
+          mks[index].iconPath = obj.data.nearestMarkImage
         }
       }
       obj.setData({ //设置markers属性，将搜索结果显示在地图中
@@ -292,6 +380,11 @@ function searchPoints(obj, points){
     },
     fail: function (res) {
       log.error("Getting the points failed: " + res.errMsg)
+      wx.showModal({
+        title: '错误提示',
+        content: '获取信息失败，请检测手机网络是否不可用！',
+        showCancel: false
+      })
       return;
     },
     complete: function(res){
@@ -317,7 +410,8 @@ function calculateDistance(obj, points) {
       for (var i = 0; i < res.elements.length; i++) {
         points[i]["distance"] = res.elements[i].distance;
         points[i]["latitude"] = toPoints[i].latitude;
-        points[i]["longitude"] = toPoints[i].longitude
+        points[i]["longitude"] = toPoints[i].longitude;
+        points[i]["image"] = obj.data.markImage
       }
       points.sort(compare("distance"));
     },
