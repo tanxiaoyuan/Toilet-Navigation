@@ -35,3 +35,8 @@ page{
   height:10vh;
   margin-left:3vh;
 }
+.schoolImage{
+  width: 10vh;
+  height: 10vh;
+  
+}
