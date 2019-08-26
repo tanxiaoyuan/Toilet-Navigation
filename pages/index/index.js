@@ -55,6 +55,7 @@ Page({
       "stopTimer": true
     })
     var id = event.markerId;
+    var points = app.globalData.points;
     var singlePoint = getSinglePoint(id, points);
     this.setData({
       singlePoint:singlePoint
