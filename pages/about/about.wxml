@@ -1,14 +1,14 @@
 <!--pages/about/about.wxml-->
 <view>
   <image class='lableImage'  src="../../images/label.png"></image>
-  <text class='labelName'>生活通</text>
+  <text class='labelName'>行得通</text>
  </view>
  <view class='decription'>
  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">开发者:&nbsp;&nbsp;&nbsp;空少</text></button>
  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本号: &nbsp;&nbsp;&nbsp;V1.0.3</text></button>
  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">使用说明(详见公众号): &nbsp;&nbsp;&nbsp;</text><image class='decriptionImage' src="../../images/description.png"></image></button>
-  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">特别申明: &nbsp;&nbsp;&nbsp;该版本初衷为成都理工新生设计——穷究于理,成就于工！</text>
+  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}"><text style="color:red">特别申明:</text> &nbsp;&nbsp;&nbsp;该版本初衷为成都理工新生设计——\n<text style="font-size:2.5vh">穷究于理, 成就于工!</text></text>
   <image class='schoolImage'  src='../../images/school.jpg'></image>
   </button>
- <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本更新说明：\n 1. 小程序更名，由便急通改为生活通 \n 2. 新增银行、药店、超市、医院选项，支持银行、药店、超市、医院的标注定位。</text></button>
+ <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本更新说明：\n 1. 小程序更名，由便急通改为行得通； \n 2. 新增银行、药店、超市、医院选项，支持银行、药店、超市、医院的标注定位；\n 3. 将默认搜索周边10处信息点改为15个点。</text></button>
 </view>

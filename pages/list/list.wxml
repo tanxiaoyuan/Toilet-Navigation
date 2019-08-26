@@ -8,4 +8,5 @@
       <text class="point-distance">距离您 {{point["distance"]}} 米</text>
    </button>
   </view>
+  <image class='noData' src="../../images/noData.png"></image>
 </view>

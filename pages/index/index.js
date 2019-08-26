@@ -3,7 +3,6 @@
 const util = require('../../utils/util.js')
 const app = getApp()
 const qqmapsdk = app.globalData.qqmapsdk
-const points = app.globalData.points
 Page({
   data:{
        locationCount: false,
@@ -228,7 +227,7 @@ Page({
        markImage:markImage,
        nearestMarkImage: nearestMarkImage
      })
-     searchPoints(this, points);
+     searchPoints(this);
   }
 })
 function getCurrentLocation(obj, manual) {
@@ -253,7 +252,8 @@ function getCurrentLocation(obj, manual) {
             'longitude': res.longitude,
             'latitude': res.latitude
           });
-          searchPoints(obj, points)
+
+          searchPoints(obj)
         }
         wx.vibrateLong();   
       },
@@ -289,7 +289,7 @@ function getCurrentLocation(obj, manual) {
                                     'longitude': reRes.longitude,
                                     'latitude': reRes.latitude
                                   });
-                                  searchPoints(obj, points)
+                                  searchPoints(obj)
                                   wx.vibrateLong();
                                 },
                                 fail: function () {
@@ -334,18 +334,27 @@ function getCurrentLocation(obj, manual) {
     
 }
 
-function searchPoints(obj, points){
+function searchPoints(obj){
+  var points = app.globalData.points;
   var searchId = obj.data.searchId;
   if(!searchId){
-      searchId = "wc"
+      searchId = "厕所"
   }
   qqmapsdk.search({
     keyword: searchId,  //搜索关键词
+    page_size: 15,
     success: function (res) { //搜索成功后的回调
       var mks = [];
+      if(res.data.length === 0){
+          app.globalData.points = [];
+          mks = [];
+          obj.setData({ //设置markers属性，将搜索结果显示在地图中
+           markers: mks
+         })
+          return;
+      }
       for (var i = 0; i < res.data.length; i++) {
         mks.push({ // 获取返回结果，放到mks数组中
-          //title: res.data[i].title,
           id: res.data[i].id,
           latitude: res.data[i].location.lat,
           longitude: res.data[i].location.lng,

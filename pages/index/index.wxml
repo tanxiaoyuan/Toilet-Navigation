@@ -29,7 +29,7 @@
          <cover-view bindtap='radioChange' id="{{item.name}}">
             <cover-image class='radioImage' src='{{item.radioImage}}'></cover-image>
             <cover-view value="{{item.name}}" ></cover-view>
-            <cover-image class='itemImage' src="{{item.image}}" bindtap='radioChange'></cover-image>
+            <cover-image class='itemImage' src="{{item.image}}"></cover-image>
             <cover-view class='itemText'>{{item.value}}</cover-view>
          </cover-view>
       </cover-view>
