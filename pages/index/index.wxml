@@ -11,7 +11,8 @@
       <cover-view class='titleView'>{{singlePoint.title}}</cover-view>
       <cover-view class='addressView'>{{singlePoint.distance}} M</cover-view>  
       <cover-view class='addressView'>{{singlePoint.address}}</cover-view>
-      <cover-image bindtap='showOrientation' class='navigationButton' src="../../images/navigationButton.png"></cover-image> 
+      <cover-image bindtap='showOrientation'id='miniProgram' class='miniPro' src="../../images/miniPro.png"></cover-image>
+      <cover-image bindtap='showOrientation' id='app' class='app' src="../../images/app.png"></cover-image>    
   </cover-view>
   <cover-image bindtap="controltap" id="zoomIn" class='zoomIn' src='../../images/zoomIn.png'></cover-image>
   <cover-image bindtap="controltap" id="relocation" class='relocation' src='../../images/relocation.png'></cover-image> 

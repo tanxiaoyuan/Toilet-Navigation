@@ -50,15 +50,26 @@ height:100vh;
   margin-left:3vh;
   font-weight: bolder
 }
-.navigationButton{
-  width: 10vh;
-  height: 10vh;
-  float: right;
-  display: block;
-  position: relative;
-  margin-top: -15vh;
-  margin-right: 6vh;
+.miniPro{
+ width:8vh;
+ height:8vh;
+ float:left;
+ display:block;
+ position:fixed;
+ margin-top:-28%;
+ margin-left:77%;
+ 
 }
+.app{
+  width:8vh;
+  height:8vh;
+  float:left;
+  display:block;
+  position:fixed;
+  margin-left:77%;
+  margin-top:-15%;
+}
+
 .zoomIn{
   width: 7vh;
   height: 7vh;

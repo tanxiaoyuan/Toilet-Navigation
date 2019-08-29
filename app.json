@@ -26,5 +26,11 @@
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "plugins": {
+    "route-plan": {
+      "version": "1.0.0",
+      "provider": "wx50b5593e81dd937a"
+    }
+  }
 }

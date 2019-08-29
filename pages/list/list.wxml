@@ -9,4 +9,13 @@
    </button>
   </view>
   <image class='noData' src="../../images/noData.png"></image>
+  <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+    <button bindtap='orientation' id='miniPro'><image class='modalImage' src='../../images/miniPro.png'></image>
+    <text class='modalTitle'>小程序导航</text>
+    <text class='modalText'>【{{toLocation}}】</text></button>
+    <button bindtap='orientation' id='app'><image class='modalImage' src='../../images/app.png'></image>
+    <text class='modalTitle'>APP导航</text>
+    <text class='modalText'>【{{toLocation}}】</text></button>
+  </view>
 </view>

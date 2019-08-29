@@ -1,6 +1,7 @@
 // pages/list/list.js
 const app = getApp();
 const util = require('../../utils/util.js')
+const key = 'R3OBZ-GU663-KA73R-3SCOZ-ZFGC2-WFFOY'
 Page({
 
   /**
@@ -77,12 +78,66 @@ Page({
     var toLocation = e.currentTarget.id;
     var latitude = e.currentTarget.dataset.latitude
     var longitude = e.currentTarget.dataset.longitude
-    wx.showModal({
-      title: '导航提示',
-      content: '确定要去【' + toLocation + '】？',
-      success: function (res) {
-        if (res.confirm) {
-          wx.openLocation({ // 打开微信内置地图，实现导航功能（在内置地图里面打开地图软件）
+    this.setData({
+      toLocation: toLocation,
+      latitude: latitude,
+      longitude: longitude
+    })
+    var animation = wx.createAnimation({
+      duration: 50,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+      showModalStatus: true
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 200)
+  },
+ hideModal: function () {
+   var animation = wx.createAnimation({
+     duration: 50,
+     timingFunction: "linear",
+     delay: 0
+   })
+   this.animation = animation
+   animation.translateY(300).step()
+   this.setData({
+     animationData: animation.export(),
+   })
+   setTimeout(function () {
+     animation.translateY(0).step()
+     this.setData({
+       animationData: animation.export(),
+       showModalStatus: false
+     })
+   }.bind(this), 200)
+  },
+  orientation: function (e) {
+      var id = e.currentTarget.id;
+      var toLocation = this.data.toLocation;
+      var latitude = this.data.latitude;
+      var longitude = this.data.longitude;
+      if(id === "miniPro"){
+        let plugin = requirePlugin('route-plan');
+          let referer = '行得通'; //调用插件的app的名称
+          let endPoint = JSON.stringify({ //终点
+            'name': toLocation,
+            'latitude': latitude,
+            'longitude': longitude,
+          });
+          wx.navigateTo({
+            url: 'plugin://route-plan/route-plan?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint
+          });
+      }else{
+            wx.openLocation({ // 打开微信内置地图，实现导航功能（在内置地图里面打开地图软件）
             latitude: latitude,
             longitude: longitude,
             name: toLocation,
@@ -93,13 +148,6 @@ Page({
               console.log(res);
             }
           })
-        } else {
-
         }
-      },
-      fail: function () {
-
-      }
-    })
   }
 })
