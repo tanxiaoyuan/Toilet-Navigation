@@ -12,31 +12,43 @@ Page({
         value: '厕所',
         checked: 'true',
         image: '../../images/toilet.png',
-        radioImage: '../../images/radioSelected.png'
+        radioImage: '../../images/radioSelected.png',
+        filter: "category=公共厕所"
       },
       {
         name: '银行',
         value: '银行',
         image: '../../images/bank.png',
-        radioImage: '../../images/radio.png'
+        radioImage: '../../images/radio.png',
+        filter: "category=银行"
       },
       {
         name: '药店',
         value: '药店',
         image: '../../images/drugstore.png',
-        radioImage: '../../images/radio.png'
+        radioImage: '../../images/radio.png',
+        filter: "category=药店"
       },
       {
         name: '超市',
         value: '超市',
         image: '../../images/market.png',
-        radioImage: '../../images/radio.png'
+        radioImage: '../../images/radio.png',
+        filter:"category=超市"
       },
       {
         name: '医院',
         value: '医院',
         image: '../../images/hospital.png',
-        radioImage: '../../images/radio.png'
+        radioImage: '../../images/radio.png',
+        filter:"category=社区医院,人民医院,公立医院"
+      },
+      {
+        name: '加油站',
+        value: '加油站',
+        image: '../../images/oil.png',
+        radioImage: '../../images/radio.png',
+        filter:"category=加油站,加气站"
       }
     ],
     searchId: '厕所',
@@ -257,6 +269,7 @@ Page({
     var oldSearchId = this.data.searchId;
     var markImage;
     var nearestMarkImage;
+    var filter;
     if (searchId === oldSearchId) {
       return;
     }
@@ -266,6 +279,7 @@ Page({
         item.radioImage = '../../images/radioSelected.png';
         markImage = item.image;
         nearestMarkImage = item.image;
+        filter = item.filter;
       } else {
         item.radioImage = '../../images/radio.png'
       }
@@ -274,7 +288,8 @@ Page({
       searchId: searchId,
       items: items,
       markImage: markImage,
-      nearestMarkImage: nearestMarkImage
+      nearestMarkImage: nearestMarkImage,
+      filter:filter
     })
     searchPoints(this);
   }
@@ -386,12 +401,14 @@ function getCurrentLocation(obj, manual) {
 function searchPoints(obj) {
   var points = app.globalData.points;
   var searchId = obj.data.searchId;
+  var filter = obj.data.filter;
   if (!searchId) {
     searchId = "厕所"
   }
   qqmapsdk.search({
     keyword: searchId, //搜索关键词
     page_size: 15,
+    filter:filter,
     success: function(res) { //搜索成功后的回调
       var mks = [];
       if (res.data.length === 0) {

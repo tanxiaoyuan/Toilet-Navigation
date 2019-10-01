@@ -29,7 +29,7 @@
   "sitemapLocation": "sitemap.json",
   "plugins": {
     "route-plan": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "provider": "wx50b5593e81dd937a"
     }
   }

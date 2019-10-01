@@ -4,11 +4,9 @@
   <text class='labelName'>行得通</text>
  </view>
  <view class='decription'>
- <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">开发者:&nbsp;&nbsp;&nbsp;空少</text></button>
- <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本号: &nbsp;&nbsp;&nbsp;V1.0.4</text></button>
+ <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">开发者:&nbsp;&nbsp;&nbsp;TAN XIAO YUAN</text></button>
+ <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本号: &nbsp;&nbsp;&nbsp;V1.0.5</text></button>
  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">使用说明(详见公众号): &nbsp;&nbsp;&nbsp;</text><image class='decriptionImage' src="../../images/description.png"></image></button>
-  <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}"><text style="color:red">特别申明:</text> &nbsp;&nbsp;&nbsp;该版本初衷为成都理工新生设计——\n<text style="font-size:2.5vh">穷究于理, 成就于工!</text></text>
-  <image class='schoolImage'  src='../../images/school.jpg'></image>
-  </button>
- <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本更新说明：\n 1. 新增小程序直接导航功能；\n 2. 界面提供APP导航和小程序导航两种选择。</text></button>
+ <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">问题反馈:&nbsp;&nbsp;&nbsp;925707761@qq.com</text></button>
+ <button class='buttonClass' type="default"><text class='decriptionText' decode="{{true}}">版本更新说明：\n 1. 新增加油站、加气站定位导航功能；\n 2. 新增医院类别筛选，过滤掉私立门诊，只显示社区医院、人民医院以及公立医院类别;\n3. 修改小程序导航和app导航图标;\n4. 完善帮助页面信息。</text></button>
 </view>

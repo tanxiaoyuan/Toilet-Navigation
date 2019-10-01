@@ -53,21 +53,17 @@ height:100vh;
 .miniPro{
  width:8vh;
  height:8vh;
- float:left;
- display:block;
- position:fixed;
- margin-top:-28%;
- margin-left:77%;
+ float:right;
+ margin-top:-29%;
+ margin-right:10%;
  
 }
 .app{
-  width:8vh;
-  height:8vh;
-  float:left;
-  display:block;
-  position:fixed;
-  margin-left:77%;
-  margin-top:-15%;
+   width:8vh;
+   height:8vh;
+   float:right;
+   margin-top:-13%;
+   margin-right:10%;
 }
 
 .zoomIn{
@@ -125,15 +121,14 @@ height:100vh;
   margin-right:3vh;
 }
 .choicemodalbox{
-  height:30vh;
-  width:30%;
+  height:35vh;
+  width:33%;
   position:fixed;
   bottom:0;
-  left:45;
   z-index:2000;
   background-color: wheat;
   opacity:0.85;
-  margin-left:55%;
+  margin-left:50%;
   margin-bottom:34%;
   border-radius:1vh;
 }
